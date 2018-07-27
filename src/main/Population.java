@@ -2,7 +2,8 @@ package main;
 
 public class Population {
 
-	
+	static int runningCount = 0;
+	static String running ="";
 	static double avgFitBest = 0;
 	static double totalMovesBest = 6000000;
 	static int goalsBest = 0;
@@ -90,8 +91,30 @@ public class Population {
 			totalMovesBest = totalMoves;
 		}
 		
+		switch(runningCount) {
+			case 0:{
+				running = "";
+				runningCount++;
+				break;
+			}
+			case 1:{
+				running = ".";
+				runningCount++;
+				break;
+			}
+			case 2:{
+				running = "..";
+				runningCount++;
+				break;
+			}
+			case 3:{
+				running = "...";
+				runningCount = 0;;
+				break;
+			}
+		}
 		
-		MyJFrame.label.setText("<html> Best | Goals: "+goalsBest+" |Total moves: "+totalMovesBest+" | Average fitness: "+avgFitBest+"<br/>"+"This | Goals: "+Dot.goals+" | Total moves: "+totalMoves+ " | Average fitness: "+avgFit+"<html>");
+		MyJFrame.label.setText("<html>"+ running+ " <br/> "+" Best | Goals: "+goalsBest+" |Total moves: "+totalMovesBest+" | Average fitness: "+avgFitBest+"<br/>"+"This | Goals: "+Dot.goals+" | Total moves: "+totalMoves+ " | Average fitness: "+avgFit+"<html>");
 		Dot.goals = 0;
 		
 		return avgFit;

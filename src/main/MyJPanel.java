@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MyJPanel extends JPanel {
@@ -15,7 +12,6 @@ public class MyJPanel extends JPanel {
 //---------------------------------------------------------------------------	
     public MyJPanel() {
        setPreferredSize(new Dimension(500,600));
-       setLayout(new BorderLayout());
        Population.build();
        
         
@@ -23,13 +19,12 @@ public class MyJPanel extends JPanel {
 //---------------------------------------------------------------------------
     @Override
     public void update(Graphics g) {
-    	
     	repaint();
-    	
     }
 //---------------------------------------------------------------------------
-    public void paint(Graphics g) {
-    	
+    public void paintComponent(Graphics g) {
+    	g.setColor(Color.white);
+   		g.fillRect(0, 0, 500, 500);
     	
    		//Goal dot painted	
    		g.setColor(Color.black);
@@ -65,8 +60,7 @@ public class MyJPanel extends JPanel {
         		g.fillRect(Population.population[i].x,Population.population[i].y, 5, 5);
         		}
         	}
-        	MyJFrame.window.setForeground(Color.white); System.out.println("Resetting foreground");
-            
+        	
         	try {Thread.sleep(300,0);} catch (InterruptedException e) {e.printStackTrace();}
         	Population.reproduce();
         	update(g);

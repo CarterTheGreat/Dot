@@ -8,18 +8,18 @@ import javax.swing.JLabel;
 
 public class MyJFrame extends JFrame{
 
-	static JLabel label;
+	static JLabel label = new JLabel();;
 	static MyJFrame window;
     private MyJPanel panel;
 //---------------------------------------------------------------------------
     public MyJFrame() {
         super();
         
+        
+        label.setText("Dot Evolution");
+        add(label, BorderLayout.SOUTH);
         panel = new MyJPanel();
         add(panel);
-        label = new JLabel();
-        add(label, BorderLayout.SOUTH);
-        //label.set
         setSize(500,600);
         setResizable(false);
         setBackground(Color.white);
@@ -30,13 +30,9 @@ public class MyJFrame extends JFrame{
         window = new MyJFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
-        window.setTitle("Test");
+        window.setTitle("Dot Evolution");
         window.setLocationRelativeTo(null);
     }
 //---------------------------------------------------------------------------
-    @Override
-    public void repaint() {
-        super.repaint();
-    }
-
+   
 }

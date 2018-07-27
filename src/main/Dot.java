@@ -98,8 +98,8 @@ public class Dot {
 			//isAlive = false;
 			//Population.deaths++;
 		}
-		if(y>465) {
-			y=465;
+		if(y>495) {
+			y=495;
 			//isAlive = false;
 			//Population.deaths++;
 		}
