@@ -2,7 +2,7 @@ package main;
 
 public class Dot {
 	
-	
+	static int goals;
 	boolean isAlive;
 	boolean reachedGoal= false;
 	double moves= 0;
@@ -52,7 +52,7 @@ public class Dot {
 			reachedGoal = true;
 			movesReached = moves;
 			moves= movesMax;
-			Population.goals++;
+			goals++;
 			//System.out.println("Goals: "+ Population.goals);
 			
 		}else {

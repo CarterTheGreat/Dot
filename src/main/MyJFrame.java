@@ -14,7 +14,7 @@ public class MyJFrame extends JFrame{
         
         panel = new MyJPanel();
         add(panel);
-        setSize(500,500);
+        setSize(500,600);
         setResizable(false);
         setBackground(Color.white);
         repaint();

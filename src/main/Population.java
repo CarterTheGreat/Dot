@@ -9,12 +9,12 @@ public class Population {
 	static double lastMoves;
 	
 	
-	static int mutateChance = 50;
+	static int mutateChance = 10;
 	static double totalMoves;
 	static double avgFit = 0;
 	static int goals = 0;
 	static int deaths = 0;
-	static int popSize = 100;
+	static int popSize = 1000;
 	
 	static Dot[] population = new Dot[popSize];
 	static int[] inheritedStep = new int[(int) Dot.movesMax];
@@ -50,7 +50,7 @@ public class Population {
 				population[i]=new Dot(250,250, true);
 				for(int j=0; j<Dot.movesMax;j++) {
 					population[i].step[j]= inheritedStep[j];
-					if(mutateRate<mutateChance) {
+					if(mutateRate<5) {
 						int p = 0 + (int)(Math.random() * ((7 - 0) + 1));
 						population[i].step[j]= p;
 					}
@@ -80,8 +80,9 @@ public class Population {
 		avgFit = (popSize*Dot.movesMax)/totalMoves;
 		System.out.println("Total moves: "+totalMoves);
 		System.out.println("Average fitness: "+avgFit);
-		
-		//if
+		System.out.println("Goals: "+Dot.goals);
+		MyJPanel.label.setText("Test");
+		Dot.goals = 0;
 		
 		return avgFit;
 	}
