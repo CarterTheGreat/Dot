@@ -3,11 +3,9 @@ package main;
 public class Population {
 
 	
-	static double bestFitness;
-	static double bestMoves; 
-	static double lastFitness;
-	static double lastMoves;
-	
+	static double avgFitBest = 0;
+	static double totalMovesBest = 6000000;
+	static int goalsBest = 0;
 	
 	static int mutateChance = 10;
 	static double totalMoves;
@@ -81,7 +79,19 @@ public class Population {
 		System.out.println("Total moves: "+totalMoves);
 		System.out.println("Average fitness: "+avgFit);
 		System.out.println("Goals: "+Dot.goals);
-		MyJPanel.label.setText("Test");
+		
+		if(goalsBest < Dot.goals) {
+			goalsBest = Dot.goals;
+		}
+		if(avgFitBest< avgFit) {
+			avgFitBest= avgFit;
+		}
+		if(totalMovesBest> totalMoves) {
+			totalMovesBest = totalMoves;
+		}
+		
+		
+		MyJFrame.label.setText("<html> Best | Goals: "+goalsBest+" |Total moves: "+totalMovesBest+" | Average fitness: "+avgFitBest+"<br/>"+"This | Goals: "+Dot.goals+" | Total moves: "+totalMoves+ " | Average fitness: "+avgFit+"<html>");
 		Dot.goals = 0;
 		
 		return avgFit;
