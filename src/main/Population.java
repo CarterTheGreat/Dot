@@ -2,16 +2,18 @@ package main;
 
 public class Population {
 
+	static String running ="";
+	
 	static int generation = 0;
 	static int runningCount = 0;
-	static String running ="";
 	static double avgFitBest = 0;
 	static double totalMovesBest = 999999999;
 	static int goalsBest = 0;
 	
-	static int mutateChance = 4;
 	static double totalMoves;
 	static double avgFit = 0;
+	
+	static int mutateChance = 4;
 	static int goals = 0;
 	static int deaths = 0;
 	static int popSize = 10000;
@@ -21,14 +23,20 @@ public class Population {
 	
 //---------------------------------------------------------------------------	
 	static void build(){
+		//Builds generation 0 with random directions
+		
 		for(int i=0; i<popSize;i++) {
-			population[i] = new Dot(250,250, true);
+			population[i] = new Dot(250,250,true,true);
 		}
 	}
 //---------------------------------------------------------------------------
 	static boolean checkMoves() {
+		
+		//Checks if dot has used every move in array of directions
 		for(int i=0; i<popSize;i++) {	
-			if(population[i].moves ==Dot.movesMax || Dot.goals == popSize) {
+			if(population[i].moves ==Dot.movesMax || goals + deaths == popSize) {
+				System.out.println("Deaths: " +deaths);
+				
 				return true;
 			}
 		}
@@ -36,10 +44,11 @@ public class Population {
 	}
 //---------------------------------------------------------------------------
 	static void reproduce(){
+		
+		//Top % of population reproduce by passing on their step directions to the next generation,
+		//bottom % die off without passing directions
+		
 		averageFit();
-		
-		
-		
 		
 		for(int i=0; i<popSize;i++) {
 			int mutateRate = 0 + (int)(Math.random() * ((1000 - 0) + 1));
@@ -47,7 +56,7 @@ public class Population {
 				for(int j=0; j<Dot.movesMax;j++) {
 					inheritedStep[j] = population[i].step[j];
 				}
-				population[i]=new Dot(250,250, true);
+				population[i]=new Dot(250,250, true,false);
 				for(int j=0; j<Dot.movesMax;j++) {
 					population[i].step[j]= inheritedStep[j];
 					if(mutateRate<mutateChance) {
@@ -57,7 +66,7 @@ public class Population {
 				}
 			}else {
 
-				population[i]=new Dot(250,250, true);
+				population[i]=new Dot(250,250, true,false);
 				for(int j=0; j<Dot.movesMax;j++) {
 					population[i].step[j]= inheritedStep[j];
 					if(mutateRate<mutateChance) {
@@ -72,18 +81,31 @@ public class Population {
 	}	
 //---------------------------------------------------------------------------
 	static double averageFit() {
+		
+		//Average fit decides well... average fitness to compare to other dots for reproduction
+		
 		totalMoves =0;
 		for(int i=0; i<popSize;i++) {
 			totalMoves+= population[i].fitMoves;
 			
 		}
 		avgFit = (popSize*Dot.movesMax)/totalMoves;
-		System.out.println("Total moves: "+totalMoves);
-		System.out.println("Average fitness: "+avgFit);
-		System.out.println("Goals: "+Dot.goals);
 		
-		if(goalsBest < Dot.goals) {
-			goalsBest = Dot.goals;
+		analytics();
+		
+		return avgFit/4;
+	}
+//---------------------------------------------------------------------------	
+	static void analytics() {
+		
+		//Outputs analytics in bottom of frame 
+		
+		//System.out.println("Total moves: "+totalMoves);
+		//System.out.println("Average fitness: "+avgFit);
+		//System.out.println("Goals: "+Population.goals);
+		
+		if(goalsBest < Population.goals) {
+			goalsBest = Population.goals;
 		}
 		if(avgFitBest< avgFit) {
 			avgFitBest= avgFit;
@@ -91,6 +113,8 @@ public class Population {
 		if(totalMovesBest> totalMoves) {
 			totalMovesBest = totalMoves;
 		}
+		
+		//Running refers to the dots in the bottom left at the top of anylitics that show that the process is running
 		
 		switch(runningCount) {
 			case 0:{
@@ -115,10 +139,9 @@ public class Population {
 			}
 		}
 		generation++;
-		MyJFrame.label.setText("<html>"+ running+ " <br/> "+"Generation: "+generation+"<br/> Best | Goals: "+goalsBest+"/"+popSize+" | Total moves: "+totalMovesBest+" | Average moves: "+totalMovesBest/popSize+" | <br/> Average fitness: "+avgFitBest+"<br/>"+"Last | Goals: "+Dot.goals+"/"+popSize+"| Total moves: "+totalMoves+ " | Average moves: "+totalMoves/popSize+" | <br/> Average fitness: "+avgFit+"<html>");
-		Dot.goals = 0;
+		MyJFrame.label.setText("<html>"+ running+ " <br/> "+"Generation: "+generation+"<br/> Best | Goals: "+goalsBest+"/"+popSize+" | Total moves: "+totalMovesBest+" | Average moves: "+totalMovesBest/popSize+" | <br/> Average fitness: "+avgFitBest+"<br/>"+"Last | Goals: "+Population.goals+"/"+popSize+"| Total moves: "+totalMoves+ " | Average moves: "+totalMoves/popSize+" | <br/> Average fitness: "+avgFit+"<html>");
+		//reset goals for next generation here instead of the board reset in paint
+		Population.goals = 0;
 		
-		return avgFit/4;
 	}
-	
 }

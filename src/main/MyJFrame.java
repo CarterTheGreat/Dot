@@ -23,7 +23,7 @@ public class MyJFrame extends JFrame{
         setSize(500,600);
         setResizable(false);
         setBackground(Color.white);
-        repaint();
+       
     }
 //---------------------------------------------------------------------------	
     public static void main(String[] args) {

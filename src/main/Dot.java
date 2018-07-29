@@ -1,28 +1,38 @@
 package main;
 
 public class Dot {
+
+	static double movesMax = 1200;
 	
-	static int goals;
 	boolean isAlive;
+	boolean isFirstGen;
 	boolean reachedGoal= false;
+	
 	double moves= 0;
+	double movesReached;
 	double fitVal;
 	double fitMoves= 0;
-	static double movesMax = 1200;
+	
 	int[] step = new int[(int) movesMax];
-	double movesReached;
+	
 	int x;
     int y;
+    
 //---------------------------------------------------------------------------	
-   public Dot(int x, int y, boolean isAlive) {
+   public Dot(int x, int y, boolean isAlive, boolean isFirstGen) {
 	   this.x= x;
 	   this.y= y;
 	   this.isAlive = isAlive;
+	   this.isFirstGen = isFirstGen;
 	   
-	   for(int i = 0; i<movesMax; i++) {
-			int r = 0 + (int)(Math.random() * ((7 - 0) + 1));
-			step[i] = r;
+	   if(isFirstGen) {
+		   //Builds random array of first moves if first gen
+		   for(int i = 0; i<movesMax; i++) {
+				int r = 0 + (int)(Math.random() * ((7 - 0) + 1));
+				step[i] = r;
+		   }
 		}
+	   
    }
 //---------------------------------------------------------------------------    
     public boolean isAlive() {
@@ -35,6 +45,8 @@ public class Dot {
 //---------------------------------------------------------------------------	
 	public void movePro() {
 		
+	//move processing makes sure directions are followed in order
+		
     	if(moves<movesMax) {
 	    	move(step[(int)moves]);
 	    	moves++;
@@ -45,15 +57,16 @@ public class Dot {
 //---------------------------------------------------------------------------	    
 	public void move(int dir) {
 		
+		//Dots act out next move in direction here 
+		
 		try {Thread.sleep(0,0);} catch (InterruptedException e) {e.printStackTrace();}
 	
-		
+		//Dot reached goal
 		if(x>=250 && x<=255 && y>=20 && y<=25) {
 			reachedGoal = true;
 			movesReached = moves;
 			moves= movesMax;
-			goals++;
-			//System.out.println("Goals: "+ Population.goals);
+			Population.goals++;
 			
 		}else {
 		switch (dir) {
@@ -88,30 +101,38 @@ public class Dot {
 		} 
 		}
 		
-		if(x>495) {
-			x=495;
-			//isAlive = false;
-			//Population.deaths++;
+		//For Death by Wall
+		//To change - comment out isAlive and deaths++ in lines below and "For Death by Wall" section in MyJPanel
+		
+		if(x>490) {
+			x=490;
+			isAlive = false;
+			Population.deaths++;
 		}
 		if(x<0) {
 			x=0;
-			//isAlive = false;
-			//Population.deaths++;
+			isAlive = false;
+			Population.deaths++;
 		}
-		if(y>495) {
-			y=495;
-			//isAlive = false;
-			//Population.deaths++;
+		if(y>470) {
+			y=470;
+			isAlive = false;
+			Population.deaths++;
 		}
 		if(y<0) {
 			y=0;
-			//isAlive = false;
-			//Population.deaths++;
+			isAlive = false;
+			Population.deaths++;
 		}
+		
+		
 		
 	}
 //---------------------------------------------------------------------------			
 	double isFit(int i) {
+		
+		//Fitness function based on moves to reach goal
+		//Failure to reach goal results in 0 (lowest possible) fitness
 		
 		if(Population.population[i].reachedGoal) {
 			fitVal = movesMax/fitMoves;
