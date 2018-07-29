@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 
 public class MyJFrame extends JFrame{
 
+	private static final long serialVersionUID = 1;
+	
 	static JLabel label = new JLabel();;
 	static MyJFrame window;
     private MyJPanel panel;
