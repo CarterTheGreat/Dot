@@ -16,7 +16,7 @@ public class MyJFrame extends JFrame{
         super();
         
         
-        label.setText("Dot Evolution");
+        label.setText("Dot Evolution | Generation 0");
         add(label, BorderLayout.SOUTH);
         panel = new MyJPanel();
         add(panel);

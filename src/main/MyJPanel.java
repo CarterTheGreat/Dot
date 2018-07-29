@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -31,13 +30,14 @@ public class MyJPanel extends JPanel {
    		g.fillRect(250, 20, 5, 5);
    		
    		
-   		//Dots previous spot cleared
-    	g.setColor(Color.white);
+   	/*Dots previous spot cleared - deprecated
+   		g.setColor(Color.white);
     	for(int i=0; i<Population.popSize;i++) {
     		if(Population.population[i].isAlive() && !Population.population[i].reachedGoal()) {
     		g.fillRect(Population.population[i].x,Population.population[i].y, 5, 5);
     		}
     	}
+    */
     	
     	//Dots move
         g.setColor(Color.red);

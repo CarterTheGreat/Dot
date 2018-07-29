@@ -8,7 +8,7 @@ public class Dot {
 	double moves= 0;
 	double fitVal;
 	double fitMoves= 0;
-	static double movesMax = 3000;
+	static double movesMax = 1200;
 	int[] step = new int[(int) movesMax];
 	double movesReached;
 	int x;

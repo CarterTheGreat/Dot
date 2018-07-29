@@ -2,18 +2,19 @@ package main;
 
 public class Population {
 
+	static int generation = 0;
 	static int runningCount = 0;
 	static String running ="";
 	static double avgFitBest = 0;
-	static double totalMovesBest = 6000000;
+	static double totalMovesBest = 999999999;
 	static int goalsBest = 0;
 	
-	static int mutateChance = 10;
+	static int mutateChance = 4;
 	static double totalMoves;
 	static double avgFit = 0;
 	static int goals = 0;
 	static int deaths = 0;
-	static int popSize = 1000;
+	static int popSize = 10000;
 	
 	static Dot[] population = new Dot[popSize];
 	static int[] inheritedStep = new int[(int) Dot.movesMax];
@@ -27,7 +28,7 @@ public class Population {
 //---------------------------------------------------------------------------
 	static boolean checkMoves() {
 		for(int i=0; i<popSize;i++) {	
-			if(population[i].moves ==Dot.movesMax|| goals == popSize) {
+			if(population[i].moves ==Dot.movesMax || Dot.goals == popSize) {
 				return true;
 			}
 		}
@@ -49,7 +50,7 @@ public class Population {
 				population[i]=new Dot(250,250, true);
 				for(int j=0; j<Dot.movesMax;j++) {
 					population[i].step[j]= inheritedStep[j];
-					if(mutateRate<5) {
+					if(mutateRate<mutateChance) {
 						int p = 0 + (int)(Math.random() * ((7 - 0) + 1));
 						population[i].step[j]= p;
 					}
@@ -113,11 +114,11 @@ public class Population {
 				break;
 			}
 		}
-		
-		MyJFrame.label.setText("<html>"+ running+ " <br/> "+" Best | Goals: "+goalsBest+" |Total moves: "+totalMovesBest+" | Average fitness: "+avgFitBest+"<br/>"+"This | Goals: "+Dot.goals+" | Total moves: "+totalMoves+ " | Average fitness: "+avgFit+"<html>");
+		generation++;
+		MyJFrame.label.setText("<html>"+ running+ " <br/> "+"Generation: "+generation+"<br/> Best | Goals: "+goalsBest+"/"+popSize+" | Total moves: "+totalMovesBest+" | Average moves: "+totalMovesBest/popSize+" | <br/> Average fitness: "+avgFitBest+"<br/>"+"Last | Goals: "+Dot.goals+"/"+popSize+"| Total moves: "+totalMoves+ " | Average moves: "+totalMoves/popSize+" | <br/> Average fitness: "+avgFit+"<html>");
 		Dot.goals = 0;
 		
-		return avgFit;
+		return avgFit/4;
 	}
 	
 }
