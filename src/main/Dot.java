@@ -106,23 +106,23 @@ public class Dot {
 		
 		if(x>490) {
 			x=490;
-			isAlive = false;
-			Population.deaths++;
+			//isAlive = false;
+			//Population.deaths++;
 		}
 		if(x<0) {
 			x=0;
-			isAlive = false;
-			Population.deaths++;
+			//isAlive = false;
+			//Population.deaths++;
 		}
 		if(y>470) {
 			y=470;
-			isAlive = false;
-			Population.deaths++;
+			//isAlive = false;
+			//Population.deaths++;
 		}
 		if(y<0) {
 			y=0;
-			isAlive = false;
-			Population.deaths++;
+			//isAlive = false;
+			//Population.deaths++;
 		}
 		
 		
@@ -131,6 +131,9 @@ public class Dot {
 //---------------------------------------------------------------------------			
 	double isFit(int i) {
 		
+		
+		
+	
 		//Fitness function based on moves to reach goal
 		//Failure to reach goal results in 0 (lowest possible) fitness
 		
@@ -141,6 +144,21 @@ public class Dot {
 			
 		}
 		return 0;
+		
+		
 	}
+//---------------------------------------------------------------------------	
+	double dist(int i) {
+	//Distance to goal based fitness
+			if(Population.population[i].reachedGoal) {
+				return 0;
+			}
+			else {
+				double distance = Math.sqrt(Math.pow((MyJPanel.goalX-x), 2) + Math.pow((MyJPanel.goalY-y), 2));
+				
+				return distance/5;
+				
+			}
+	}		
 	
 }
