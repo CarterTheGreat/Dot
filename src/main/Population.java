@@ -6,18 +6,22 @@ public class Population {
 	
 	static int generation = 0;
 	static int runningCount = 0;
-	//static double avgFitBest = 0;
+	static double avgFitBest = 0;
 	static double avgDistBest = 9999999;
 	static double totalMovesBest = 999999999;
 	static int goalsBest = 0;
 	
 	static double totalMoves;
-	//static double avgFit = 0;
+	static double avgFit = 0;
+	static double bestFit = 999999999;
+	static double bestFitEver = 999999999;
+	static double bestDist = 99999999;
 	
 	static double totalDist;
 	static double avgDist = 0;
 	
-	static int mutateChance = 4;
+	static int mutateChance = 20;
+	
 	static int goals = 0;
 	static int deaths = 0;
 	
@@ -27,7 +31,7 @@ public class Population {
 	
 	//Spawn position
 	static int x = 20;
-	static int y = 400;
+	static int y = 500;
 	//
 	
 	static Dot[] population = new Dot[popSize];
@@ -60,86 +64,119 @@ public class Population {
 		//Top % of population reproduce by passing on their step directions to the next generation,
 		//bottom % die off without passing directions
 		
-		averageDist();
 		
-		for(int i=0; i<popSize;i++) {
-			int mutateRate = 0 + (int) (Math.random() * ((1000 - 0) + 1));
-			if (population[i].dist(i)<=avgDist) {
-				for(int j=0; j<Dot.movesMax;j++) {
-					inheritedStep[j] = population[i].step[j];
-				}
-				population[i]=new Dot(x,y, true,false);
-				for(int j=0; j<Dot.movesMax;j++) {
-					population[i].step[j]= inheritedStep[j];
-					if(mutateRate<mutateChance) {
-						int p = 0 + (int)(Math.random() * ((7 - 0) + 1));
-						population[i].step[j]= p;
+		
+		bestFit();
+		bestDist();
+		analytics();
+		
+		double fitVal = bestFit;
+		boolean fitChoice;
+		
+		
+		
+		//fitChoice true when a dot has reached goal
+		if(fitVal < 1200 && goals != popSize) {
+			fitChoice = true;
+		} else fitChoice = false;
+		
+				
+		if(fitChoice) {	
+			for(int i=0; i<popSize;i++) {
+				if (population[i].fit() == bestFit) {
+					for(int j=0; j<Dot.movesMax;j++) {
+						inheritedStep[j] = population[i].step[j];
 					}
-				}
-			}else {
-
-				population[i]=new Dot(x,y, true,false);
-				for(int j=0; j<Dot.movesMax;j++) {
-					population[i].step[j]= inheritedStep[j];
-					if(mutateRate<mutateChance) {
-						int p = 0 + (int)(Math.random() * ((7 - 0) + 1));
-						population[i].step[j]= p;
+				}	
+			}
+		}else {
+			for(int i=0; i<popSize;i++) {
+				if (population[i].dist() == bestDist) {
+					for(int j=0; j<Dot.movesMax;j++) {
+						inheritedStep[j] = population[i].step[j];
 					}
 				}
 			}
+		}	
+		
+		
+		
+		for(int i=0;i<popSize;i++) {
+			//Builds new dot
+			population[i]=new Dot(x,y, true,false);
+							
+			for(int j=0; j<Dot.movesMax;j++) {
+				//Sets dot steps to inhereted steps
+				population[i].step[j]= inheritedStep[j];
 				
+				int mutateRate = 0 + (int) (Math.random() * ((1000 - 0) + 1));//     1000
+				
+				//System.out.println("Steps assigned from inheritance");
+				if(mutateRate<mutateChance) {
+					//Mutates random steps to random direction
+					int p = 0 + (int)(Math.random() * ((7 - 0) + 1));
+					population[i].step[j]= p;
+					
+					//System.out.println("Mutation processed");
+				}
+			}
 		}
+		
+		
 		
 	}	
 //---------------------------------------------------------------------------
-	static double averageFit() {
+	static double bestFit() {
 		
 		//Average fit decides well... average fitness to compare to other dots for reproduction
 		
-		//Move based
 		
 		for(int i=0; i<popSize;i++) {
-			totalMoves+= population[i].fitMoves;
-			
-			
+			if(bestFit > population[i].fit()) {
+				bestFit = population[i].fit();
+				System.out.println("best fit for loop if");
+			}
+			//System.out.println("Best fit for loop");
 		}
-		double avgFit = (popSize*Dot.movesMax)/(totalMoves);
 		
 		//analytics();
 		
-		return avgFit;
+		System.out.println("Best fit: "+bestFit);
+		return bestFit;
 
 	}
 //---------------------------------------------------------------------------	
-	static double averageDist() {
+	static double bestDist() {
 		
-		//Used for analytics
-			totalMoves =0;
-			for(int i=0; i<popSize;i++) {
-				totalMoves+= population[i].fitMoves;
-			}
-		//End analytics section	
-
-		totalDist = 0;
+		bestDist = 9999999;
+		
 		for(int i=0; i<popSize;i++) {
-			totalDist+= population[i].dist(i);
+			if(bestDist > population[i].dist()) {
+				bestDist = population[i].dist();
+				//System.out.println("best dist for loop");
+			}
+			totalDist += population[i].dist();
+			totalMoves += population[i].moves;
+			//Dot.movesMax = totalMoves/popSize;
 		}
 		
 		avgDist = totalDist/popSize;
-
-		System.out.println("Total dist: "+totalDist + "\nAvg Dist: "
-		+avgDist);
+		//avgMoves = totalMoves/popSize;
+		//analytics();
 		
-		analytics();
-		
-		return avgDist;
+		System.out.println("Best dist: "+bestDist);
+		return bestDist;
 	}
 //---------------------------------------------------------------------------	
 	static void analytics() {
 		
-		//Outputs analytics in bottom of frame 
+		//Outputs analytics in console && frame south
 		
-		System.out.println("Total moves:     "+totalMoves);
+		//double bestFitPossible = (Math.sqrt(Math.pow((MyJPanel.goalX-x), 2) + Math.pow((MyJPanel.goalY-y), 2)))/5;
+		
+		
+		System.out.println("Best Fit:     "+bestFit);
+		//System.out.println("Best Fit Possible: "+bestFitPossible);
 		System.out.println("Average distance: "+avgDist);
 		System.out.println("Goals:           "+Population.goals);
 		System.out.println("------------------------------------");
@@ -147,12 +184,16 @@ public class Population {
 		if(goalsBest < Population.goals) {
 			goalsBest = Population.goals;
 		}
-		if(avgDistBest> avgDist) {
+		if(avgDistBest > avgDist) {
 			avgDistBest= avgDist;
 		}
-		if(totalMovesBest> totalMoves) {
+		if(totalMovesBest > totalMoves) {
 			totalMovesBest = totalMoves;
 		}
+		if(bestFitEver > bestFit) {
+			bestFitEver = bestFit;
+		}
+		
 		
 		//Running refers to the dots in the bottom left at the top of anylitics that show that the process is running
 		
@@ -179,7 +220,7 @@ public class Population {
 			}
 		}
 		generation++;
-		MyJFrame.label.setText("<html>"+ running+ " <br/> "+"Generation: "+generation+"<br/> Best | Goals: "+goalsBest+"/"+popSize+" | Total moves: "+totalMovesBest+" | Average moves: "+totalMovesBest/popSize+" | <br/> Average Distance: "+avgDistBest+"<br/>"+"Last | Goals: "+Population.goals+"/"+popSize+"| Total moves: "+totalMoves+ " | Average moves: "+totalMoves/popSize+" | <br/> Average Distance: "+avgDist+"<html>");
+		MyJFrame.label.setText("<html>"+ running+ " <br/> "+"Generation: "+generation+"<br/> Best | Goals: "+goalsBest+"/"+popSize+" | Least moves: "+bestFitEver+" | Average moves: "+totalMovesBest/popSize+" | <br/> Average Distance: "+avgDistBest+"<br/>"+"Last | Goals: "+Population.goals+"/"+popSize+"| Least moves: "+bestFit+ " | Average moves: "+totalMoves/popSize+" | <br/> Average Distance: "+avgDist+"<html>");
 		//reset goals for next generation here instead of the board reset in paint
 		Population.goals = 0;
 		

@@ -12,6 +12,9 @@ public class MyJFrame extends JFrame{
 	
 	static JLabel label = new JLabel();;
 	static MyJFrame window;
+		static int frameX = 400;
+		static int frameY = 600;
+	
     private MyJPanel panel;
 //---------------------------------------------------------------------------
     public MyJFrame() {
@@ -22,7 +25,7 @@ public class MyJFrame extends JFrame{
         add(label, BorderLayout.SOUTH);
         panel = new MyJPanel();
         add(panel);
-        setSize(500,600);
+        setSize(frameX,frameY);
         setResizable(false);
         setBackground(Color.white);
        

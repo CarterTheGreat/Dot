@@ -62,10 +62,10 @@ public class Dot {
 		try {Thread.sleep(0,0);} catch (InterruptedException e) {e.printStackTrace();}
 	
 		//Dot reached goal
-		if(x>=250 && x<=255 && y>=20 && y<=25) {
+		if(x>=MyJPanel.goalX && x<=MyJPanel.goalX+5 && y>=MyJPanel.goalY && y<=MyJPanel.goalY+5) {
 			reachedGoal = true;
 			movesReached = moves;
-			moves= movesMax;
+			//moves= movesMax;
 			Population.goals++;
 			
 		}else {
@@ -104,8 +104,8 @@ public class Dot {
 		//For Death by Wall
 		//To change - comment out isAlive and deaths++ in lines below and "For Death by Wall" section in MyJPanel
 		
-		if(x>490) {
-			x=490;
+		if(x>MyJPanel.panelX) {
+			x=MyJPanel.panelX-10;
 			//isAlive = false;
 			//Population.deaths++;
 		}
@@ -114,8 +114,8 @@ public class Dot {
 			//isAlive = false;
 			//Population.deaths++;
 		}
-		if(y>470) {
-			y=470;
+		if(y>MyJPanel.panelY) {
+			y=MyJPanel.panelY-10;
 			//isAlive = false;
 			//Population.deaths++;
 		}
@@ -129,28 +129,25 @@ public class Dot {
 		
 	}
 //---------------------------------------------------------------------------			
-	double isFit(int i) {
-		
-		
-		
-	
+	double fit() {
 		//Fitness function based on moves to reach goal
 		//Failure to reach goal results in 0 (lowest possible) fitness
 		
-		if(Population.population[i].reachedGoal) {
-			fitVal = movesMax/fitMoves;
-			//System.out.println("Fitval: "+fitVal);
-			return fitVal;
+		if(reachedGoal) {
 			
+			return fitMoves;
+			
+		} 
+		else {
+		return 1200;
 		}
-		return 0;
 		
 		
 	}
 //---------------------------------------------------------------------------	
-	double dist(int i) {
+	double dist() {
 	//Distance to goal based fitness
-			if(Population.population[i].reachedGoal) {
+			if(reachedGoal) {
 				return 0;
 			}
 			else {

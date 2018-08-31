@@ -10,12 +10,15 @@ public class MyJPanel extends JPanel {
 	private static final long serialVersionUID = 1;
 	
 	
-	static int goalX = 250;
+	static int panelX = MyJFrame.frameX;
+	static int panelY = MyJFrame.frameY-100;
+	
+	static int goalX = panelX/2;
 	static int goalY = 20;
 	
 //---------------------------------------------------------------------------	
     public MyJPanel() {
-       setPreferredSize(new Dimension(500,600));
+       setPreferredSize(new Dimension(panelX,panelY));
        Population.build();
        
         
@@ -31,7 +34,7 @@ public class MyJPanel extends JPanel {
     	//Paint panel, covers old dots from previous gen that did not reach goal
     	//and paints over analytics that pop up in top of panel - no idea why it happens
     	g.setColor(Color.white);
-    	g.fillRect(0, 0, 500, 500);
+    	g.fillRect(0, 0, 1600, 700);
     	
    		//Goal dot painted	
    		g.setColor(Color.black);
@@ -83,6 +86,7 @@ public class MyJPanel extends JPanel {
         	
         	System.out.println("Population reproducing");
         	Population.reproduce();
+        	Population.totalMoves = 0;
         	Population.deaths = 0;
         	update(g);
         	
