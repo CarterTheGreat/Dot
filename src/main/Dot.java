@@ -62,7 +62,7 @@ public class Dot {
 		try {Thread.sleep(0,0);} catch (InterruptedException e) {e.printStackTrace();}
 	
 		//Dot reached goal
-		if(x>=MyJPanel.goalX && x<=MyJPanel.goalX+5 && y>=MyJPanel.goalY && y<=MyJPanel.goalY+5) {
+		if(x>=EvolutionPanel.goalX && x<=EvolutionPanel.goalX+5 && y>=EvolutionPanel.goalY && y<=EvolutionPanel.goalY+5) {
 			reachedGoal = true;
 			movesReached = moves;
 			//moves= movesMax;
@@ -102,10 +102,10 @@ public class Dot {
 		}
 		
 		//For Death by Wall
-		//To change - comment out isAlive and deaths++ in lines below and "For Death by Wall" section in MyJPanel
+		//To change - comment out isAlive and deaths++ in lines below and "For Death by Wall" section in EvolutionPanel
 		
-		if(x>MyJPanel.panelX) {
-			x=MyJPanel.panelX-10;
+		if(x>EvolutionPanel.panelX) {
+			x=EvolutionPanel.panelX-5;
 			//isAlive = false;
 			//Population.deaths++;
 		}
@@ -114,8 +114,8 @@ public class Dot {
 			//isAlive = false;
 			//Population.deaths++;
 		}
-		if(y>MyJPanel.panelY) {
-			y=MyJPanel.panelY-10;
+		if(y>EvolutionPanel.panelY) {
+			y=EvolutionPanel.panelY-5;
 			//isAlive = false;
 			//Population.deaths++;
 		}
@@ -126,6 +126,14 @@ public class Dot {
 		}
 		
 		
+		
+		//For hitting obstacles
+		for(int i = 0; i < EvolutionPanel.obstacleCount; i++) {
+			if(x > EvolutionPanel.obstacles[i].xMin && x < EvolutionPanel.obstacles[i].xMax && y < EvolutionPanel.obstacles[i].yMin && y > EvolutionPanel.obstacles[i].yMax) {
+				isAlive = false;
+			}
+			
+		}
 		
 	}
 //---------------------------------------------------------------------------			
@@ -139,7 +147,7 @@ public class Dot {
 			
 		} 
 		else {
-		return 1200;
+		return movesMax;
 		}
 		
 		
@@ -151,7 +159,7 @@ public class Dot {
 				return 0;
 			}
 			else {
-				double distance = Math.sqrt(Math.pow((MyJPanel.goalX-x), 2) + Math.pow((MyJPanel.goalY-y), 2));
+				double distance = Math.sqrt(Math.pow((EvolutionPanel.goalX-x), 2) + Math.pow((EvolutionPanel.goalY-y), 2));
 				
 				return distance/5;
 				

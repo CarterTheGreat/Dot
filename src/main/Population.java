@@ -13,6 +13,7 @@ public class Population {
 	
 	static double totalMoves;
 	static double avgFit = 0;
+	static double avgMoves = Dot.movesMax;
 	static double bestFit = 999999999;
 	static double bestFitEver = 999999999;
 	static double bestDist = 99999999;
@@ -44,6 +45,8 @@ public class Population {
 		for(int i=0; i<popSize;i++) {
 			population[i] = new Dot(x,y,true,true);
 		}
+		
+		System.out.println("Population built");
 	}
 //---------------------------------------------------------------------------
 	static boolean checkMoves() {
@@ -106,7 +109,7 @@ public class Population {
 			population[i]=new Dot(x,y, true,false);
 							
 			for(int j=0; j<Dot.movesMax;j++) {
-				//Sets dot steps to inhereted steps
+				//Sets dot steps to inherited steps
 				population[i].step[j]= inheritedStep[j];
 				
 				int mutateRate = 0 + (int) (Math.random() * ((1000 - 0) + 1));//     1000
@@ -161,7 +164,7 @@ public class Population {
 		}
 		
 		avgDist = totalDist/popSize;
-		//avgMoves = totalMoves/popSize;
+		avgMoves = totalMoves/popSize;
 		//analytics();
 		
 		System.out.println("Best dist: "+bestDist);
@@ -180,6 +183,7 @@ public class Population {
 		System.out.println("Average distance: "+avgDist);
 		System.out.println("Goals:           "+Population.goals);
 		System.out.println("------------------------------------");
+		
 		
 		if(goalsBest < Population.goals) {
 			goalsBest = Population.goals;

@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-public class MyJPanel extends JPanel {
+public class EvolutionPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1;
 	
@@ -16,12 +16,24 @@ public class MyJPanel extends JPanel {
 	static int goalX = panelX/2;
 	static int goalY = 20;
 	
+	static int obstacleCount = 10;
+	
+	static Obstacle obstacles[] = new Obstacle[obstacleCount];
+	
+	
 //---------------------------------------------------------------------------	
-    public MyJPanel() {
+    public EvolutionPanel() {
+       System.out.println("Evolution panel built");
        setPreferredSize(new Dimension(panelX,panelY));
+       setVisible(true);
        Population.build();
        
         
+       for(int i = 0; i<obstacleCount; i++) {
+   			System.out.println("Build obstacles");
+       	   obstacles[i] = new Obstacle(300,300,20,20);
+       }
+    	   
     }
 //---------------------------------------------------------------------------
     @Override
@@ -40,7 +52,10 @@ public class MyJPanel extends JPanel {
    		g.setColor(Color.black);
    		g.fillRect(goalX, goalY, 5, 5);
    		
-   		
+   		for(int i = 0; i<obstacleCount; i++) {
+	   		g.setColor(Color.blue);
+	   		g.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+   		}
    	/*Dots previous spot cleared - deprecated - can be used to add colorful trails
    	 * 
    		g.setColor(Color.white);
@@ -73,6 +88,7 @@ public class MyJPanel extends JPanel {
         //Board reset for next gen/update
         if(Population.checkMoves()) {
         	//Reset board here
+        	
         	System.out.println("Resetting space");
         	g.setColor(Color.white);
         	for(int i=0; i<Population.popSize;i++) {

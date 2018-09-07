@@ -12,19 +12,20 @@ public class MyJFrame extends JFrame{
 	
 	static JLabel label = new JLabel();;
 	static MyJFrame window;
-		static int frameX = 400;
-		static int frameY = 600;
+		static int frameX = 600;
+		static int frameY = 700;
 	
-    private MyJPanel panel;
+		private OptionsPanel optionsPanel;
+    
 //---------------------------------------------------------------------------
-    public MyJFrame() {
+   public MyJFrame() {
         super();
         
         
-        label.setText("Dot Evolution | Generation 0");
+        label.setText("Dot Evolution");
         add(label, BorderLayout.SOUTH);
-        panel = new MyJPanel();
-        add(panel);
+        optionsPanel = new OptionsPanel();
+        add(optionsPanel);
         setSize(frameX,frameY);
         setResizable(false);
         setBackground(Color.white);
