@@ -10,8 +10,8 @@ public class EvolutionPanel extends JPanel {
 	private static final long serialVersionUID = 1;
 	
 	
-	static int panelX = MyJFrame.frameX;
-	static int panelY = MyJFrame.frameY-100;
+	static int panelX = Frame.frameX;
+	static int panelY = Frame.frameY-100;
 	
 	static int goalX = panelX/2;
 	static int goalY = 20;	

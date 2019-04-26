@@ -224,7 +224,7 @@ public class Population {
 			}
 		}
 		generation++;
-		MyJFrame.label.setText("<html>"+ running+ " <br/> "+"Generation: "+generation+"<br/> Best | Goals: "+goalsBest+"/"+popSize+" | Least moves: "+bestFitEver+" | Average moves: "+totalMovesBest/popSize+" | <br/> Average Distance: "+avgDistBest+"<br/>"+"Last | Goals: "+Population.goals+"/"+popSize+"| Least moves: "+bestFit+ " | Average moves: "+totalMoves/popSize+" | <br/> Average Distance: "+avgDist+"<html>");
+		Frame.label.setText("<html>"+ running+ " <br/> "+"Generation: "+generation+"<br/> Best | Goals: "+goalsBest+"/"+popSize+" | Least moves: "+bestFitEver+" | Average moves: "+totalMovesBest/popSize+" | <br/> Average Distance: "+avgDistBest+"<br/>"+"Last | Goals: "+Population.goals+"/"+popSize+"| Least moves: "+bestFit+ " | Average moves: "+totalMoves/popSize+" | <br/> Average Distance: "+avgDist+"<html>");
 		//reset goals for next generation here instead of the board reset in paint
 		Population.goals = 0;
 		

@@ -6,19 +6,19 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class MyJFrame extends JFrame{
+public class Frame extends JFrame{
 
 	private static final long serialVersionUID = 2;
 	
 	static JLabel label = new JLabel();;
-	static MyJFrame window;
+	static Frame window;
 	static int frameX = 600;
 	static int frameY = 700;
 	
 	private OptionsPanel optionsPanel;
     
 //---------------------------------------------------------------------------
-   public MyJFrame() {
+   public Frame() {
         super();
         
         
@@ -33,7 +33,7 @@ public class MyJFrame extends JFrame{
     }
 //---------------------------------------------------------------------------	
     public static void main(String[] args) {
-        window = new MyJFrame();
+        window = new Frame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
         window.setTitle("Dot Evolution");

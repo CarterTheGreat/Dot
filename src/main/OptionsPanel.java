@@ -15,8 +15,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	
 	private EvolutionPanel evolutionPanel;
 	
-	static int panelX = MyJFrame.frameX;
-	static int panelY = MyJFrame.frameY-100;
+	static int panelX = Frame.frameX;
+	static int panelY = Frame.frameY-100;
 	
 	GridBagConstraints c = new GridBagConstraints();	
 	
@@ -134,8 +134,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		if(setX && setY && setPop) {
 			return true;
 		}else {
-			MyJFrame.label.setText("<html><font color='red'>Incorrect value input</font></html>");
-			//MyJFrame.label.setText("Incorrect value in");
+			Frame.label.setText("<html><font color='red'>Incorrect value input</font></html>");
+			//Frame.label.setText("Incorrect value in");
 			return false;
 		}
 		
@@ -149,7 +149,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 			removeAll();
 			setVisible(false);					
 			evolutionPanel = new EvolutionPanel();
-	        MyJFrame.window.add(evolutionPanel);
+	        Frame.window.add(evolutionPanel);
 		}
 	}	
 }
