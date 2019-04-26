@@ -12,10 +12,10 @@ public class MyJFrame extends JFrame{
 	
 	static JLabel label = new JLabel();;
 	static MyJFrame window;
-		static int frameX = 600;
-		static int frameY = 700;
+	static int frameX = 600;
+	static int frameY = 700;
 	
-		private OptionsPanel optionsPanel;
+	private OptionsPanel optionsPanel;
     
 //---------------------------------------------------------------------------
    public MyJFrame() {
