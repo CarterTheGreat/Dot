@@ -126,15 +126,6 @@ public class Dot {
 		}
 		
 		
-		
-		//For hitting obstacles
-		for(int i = 0; i < EvolutionPanel.obstacleCount; i++) {
-			if(x > EvolutionPanel.obstacles[i].xMin && x < EvolutionPanel.obstacles[i].xMax && y < EvolutionPanel.obstacles[i].yMin && y > EvolutionPanel.obstacles[i].yMax) {
-				isAlive = false;
-			}
-			
-		}
-		
 	}
 //---------------------------------------------------------------------------			
 	double fit() {

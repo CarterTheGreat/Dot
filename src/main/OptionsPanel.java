@@ -24,10 +24,10 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	int popMax = 10000;
 	
 	//Inputs/info
-	JTextField dotYInput, dotXInput, popSizeInput, obstacleCountInput;
-	String setDotX, setDotY, setPopSize, setObstacleCount;
+	JTextField dotYInput, dotXInput, popSizeInput;
+	String setDotX, setDotY, setPopSize;
 	
-	boolean setX,setY,setPop,setOb;
+	boolean setX,setY,setPop;
 	
 	//Obstacles--------
 	
@@ -88,22 +88,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		c.gridx = 2;
 		c.gridy = 1;
 		add(dotYInput, c);
-	//Obstacles-------------------------------------
-		JTextArea obstacleCountText = new JTextArea();
-		obstacleCountText.setText("Obstacle Count Between 0 - 10 :");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.gridx = 0;
-		c.gridy = 2;
-		add(obstacleCountText, c);
-		
-		obstacleCountInput = new JTextField();
-		obstacleCountInput.setText("1");
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = .5;
-		c.gridx = 2;
-		c.gridy = 2;
-		add(obstacleCountInput, c);
+	
 		
 		
 	}
@@ -114,17 +99,8 @@ public class OptionsPanel extends JPanel implements ActionListener{
 		setDotX = dotXInput.getText();
 		setDotY = dotYInput.getText();
 		setPopSize = popSizeInput.getText();
-		setObstacleCount = obstacleCountInput.getText();
 		System.out.println("x: "+setDotX+" y: "+setDotY+" size: "+setPopSize);
 		
-		try {	
-			if(Integer.parseInt(setObstacleCount) >= 0 && Integer.parseInt(setObstacleCount) <= 10) {
-				EvolutionPanel.obstacleCount = Integer.parseInt(setObstacleCount);   
-			 	setOb = true;
-			}
-		} catch (NumberFormatException e) {
-	        System.out.println("obstacle count out of bounds");;
-	    }
 		try {	
 			if(Integer.parseInt(setDotX) >-1 && Integer.parseInt(setDotX) < EvolutionPanel.panelX+1) {
 				Population.x = Integer.parseInt(setDotX);
@@ -155,7 +131,7 @@ public class OptionsPanel extends JPanel implements ActionListener{
 	    }
 		
 		
-		if(setX && setY && setPop && setOb) {
+		if(setX && setY && setPop) {
 			return true;
 		}else {
 			MyJFrame.label.setText("<html><font color='red'>Incorrect value input</font></html>");

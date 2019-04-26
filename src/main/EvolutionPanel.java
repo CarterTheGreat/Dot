@@ -14,12 +14,7 @@ public class EvolutionPanel extends JPanel {
 	static int panelY = MyJFrame.frameY-100;
 	
 	static int goalX = panelX/2;
-	static int goalY = 20;
-	
-	static int obstacleCount = 10;
-	
-	static Obstacle obstacles[] = new Obstacle[obstacleCount];
-	
+	static int goalY = 20;	
 	
 //---------------------------------------------------------------------------	
     public EvolutionPanel() {
@@ -28,12 +23,6 @@ public class EvolutionPanel extends JPanel {
        setVisible(true);
        Population.build();
        
-        
-       for(int i = 0; i<obstacleCount; i++) {
-   			System.out.println("Build obstacles");
-       	   obstacles[i] = new Obstacle(300,300,20,20);
-       }
-    	   
     }
 //---------------------------------------------------------------------------
     @Override
@@ -52,10 +41,6 @@ public class EvolutionPanel extends JPanel {
    		g.setColor(Color.black);
    		g.fillRect(goalX, goalY, 5, 5);
    		
-   		for(int i = 0; i<obstacleCount; i++) {
-	   		g.setColor(Color.blue);
-	   		g.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
-   		}
    	/*Dots previous spot cleared - deprecated - can be used to add colorful trails
    	 * 
    		g.setColor(Color.white);
